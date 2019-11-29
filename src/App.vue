@@ -1,32 +1,75 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app id="keep">
+    <v-app-bar
+      app
+      clipped-left
+      color="primary"
+    >
+      <span class="title ml-3 mr-5">Google&nbsp;<span class="font-weight-light">Keep</span></span>
+      <template v-if="hiddenNavbar !== true">
+      <v-text-field
+        
+        solo-inverted
+        flat
+        hide-details
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+      />
+      </template>
+      <v-spacer />
+      <!-- <v-btn
+      text
+      icon
+      large
+      >
+      <v-icon >mdi-account-circle-outline</v-icon>
+      Login
+      </v-btn> -->
+
+      <v-spacer />
+    </v-app-bar>
+
+    <v-content>
+      <v-container
+        fluid
+        class="grey lighten-4 fill-height"
+      >
+        <v-row
+          justify="center"
+          align="center"
+        >
+        <router-view />
+        </v-row>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+  export default {
+    name: 'App',
+    data: () => ({
+      hiddenNavbar: false
+    }),
+    mounted(){
+      this.verifyNavbar()
+    },
+    methods: {
+      verifyNavbar(){
+        if(this.$route.path === '/login') {
+          this.hiddenNavbar = true;
+          return true;
+        } else {
+          this.hiddenNavbar = false;
+          return false;
+        }
+      }
     }
   }
+</script>
+
+<style>
+#keep .v-navigation-drawer__border {
+  display: none
 }
 </style>
